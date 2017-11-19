@@ -5,14 +5,15 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
+import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
 import Persistencia.QueryBuilder0;
 
@@ -20,32 +21,23 @@ public class Form0 extends JPanel{
 	
 	private JButton okButton;
 	private JTextField nameField;
+	private JComboBox uniComboBox;
 	
 	private DatabaseActionListener dbListener;
 	private TableActionListener tableListener;
 	
 	public Form0() {
-		setPreferredSize(new Dimension(250, getSize().height));
+		setPreferredSize(new Dimension(350, getSize().height));
 		
 		okButton = new JButton("Ok");
 		nameField = new JTextField(10);
+		uniComboBox = new JComboBox();
 		
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(dbListener != null) {
-					
-					QueryBuilder0 queryBuilder = new QueryBuilder0();
-					DatabaseResponse dataResp = dbListener.queryRequested(queryBuilder.buildQuery());
-					
-					if(dataResp == null)
-						JOptionPane.showMessageDialog(Form0.this.getParent(), "Query not valid", "Error", JOptionPane.ERROR_MESSAGE);
-					else
-						tableListener.updateTable(dataResp);
-				}
-				else
-					System.out.println("null listener");
+				performQuery();
 			}
 		});
 		
@@ -72,6 +64,20 @@ public class Form0 extends JPanel{
 		add(nameField, constraints);
 		
 		/**************NEXT ROW******************/
+		constraints.gridy ++;
+		
+		constraints.gridx = 0;
+		constraints.weighty = 0.1;
+		constraints.weightx = 1;
+		constraints.anchor  = GridBagConstraints.LINE_END;
+		add(new JLabel("Univerisdade: "), constraints);
+		
+		constraints.gridx = 1;
+		constraints.weighty = 0.1;
+		constraints.weightx = 1;
+		constraints.anchor  = GridBagConstraints.LINE_START;
+		add(uniComboBox, constraints);
+		
 		/**************NEXT ROW******************/
 		/**************NEXT ROW******************/
 		constraints.gridy++;
@@ -86,12 +92,48 @@ public class Form0 extends JPanel{
 		constraints.fill = GridBagConstraints.NONE;
 	}
 	
+	private void performQuery() {
+		if(dbListener != null) {
+			
+			QueryBuilder0 queryBuilder = new QueryBuilder0(dbListener);
+			DatabaseResponse dataResp = queryBuilder.makeQuery();
+			
+			if(dataResp == null)
+				JOptionPane.showMessageDialog(Form0.this.getParent(), "Query not valid", "Error", JOptionPane.ERROR_MESSAGE);
+			else
+				tableListener.updateTable(dataResp);
+		}
+		else
+			System.out.println("null listener");
+	}
+	
+	private void setUniComboBox() {
+		
+		if(dbListener != null) {
+			
+			DatabaseResponse dataResp = dbListener.queryRequested("select distinct NO_IES from ies order by NO_IES");
+			
+			if(dataResp != null)
+			{
+				DefaultComboBoxModel uniModel = new DefaultComboBoxModel();
+				for(int i = 1; i < dataResp.getData().size(); i++)
+					uniModel.addElement(dataResp.getData().get(i).get(0));
+				
+				Dimension size = new Dimension(250, uniComboBox.getPreferredSize().height);
+				uniComboBox.setSize(size);
+				uniComboBox.setPreferredSize(size);
+				uniComboBox.setModel(uniModel);	
+			}
+		}
+	}
+	
 	public void setTableActionListener(TableActionListener tableListener) {
 		this.tableListener = tableListener;
 	}
 	
 	public void setDatabaseActionListener(DatabaseActionListener dbListener) {
 		this.dbListener = dbListener;
+		setUniComboBox();
 	}
 	
 }

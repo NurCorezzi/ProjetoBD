@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Persistencia.Database;
+import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
 
 public class MainFrame extends JFrame{
@@ -57,7 +58,7 @@ public class MainFrame extends JFrame{
 		tabbedForm.setDatabaseActionListener(new DatabaseActionListener() {
 			@Override
 			public DatabaseResponse queryRequested(String query) {
-				return db.query(query);
+				return db.select(query);
 			}
 		});
 		

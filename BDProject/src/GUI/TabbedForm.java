@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import Persistencia.DatabaseActionListener;
+
 public class TabbedForm extends JPanel{
 	
 	private JTabbedPane tabbedPanel;
@@ -35,6 +37,7 @@ public class TabbedForm extends JPanel{
 		form3 = new Form3(); form3.setTableActionListener(table3.getTableActionListener());
 		form4 = new Form4(); form4.setTableActionListener(table4.getTableActionListener());
 
+		table2.setReorderTableListener(form2.getReorderTableListener());
 		
 		tabbedPanel.addTab("Consulta 0", new TableForm(form0, table0));
 		tabbedPanel.addTab("Consulta 1", new TableForm(form1, table1));

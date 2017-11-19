@@ -21,11 +21,11 @@ public class Database {
 	}
 	
 	public void connect() throws SQLException{
-		myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/csv_db", "root", "");
+		myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/csv_db?useSSL=false", "root", "root");
 		System.out.println("Database connection successful!\n");
 	}
 	
-	public DatabaseResponse query(String query) {
+	public DatabaseResponse select(String query) {
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt.executeQuery(query);

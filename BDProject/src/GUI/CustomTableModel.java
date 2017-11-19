@@ -1,4 +1,8 @@
 package GUI;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Vector;
+
 import javax.sql.rowset.CachedRowSet;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,7 +19,7 @@ public class CustomTableModel extends AbstractTableModel{
 	@Override
 	public String getColumnName(int column) {
 		
-		if(dataRes == null) return "null";
+		if(dataRes == null || column < 0) return "null";
 		
 		return dataRes.getData().get(0).get(column).toString();
 	}
@@ -31,7 +35,7 @@ public class CustomTableModel extends AbstractTableModel{
 	@Override
 	public int getRowCount() {
 		
-		if(dataRes == null) return 1;
+		if(dataRes == null) return 0;
 		
 		return dataRes.getData().size() - 1;
 	}
