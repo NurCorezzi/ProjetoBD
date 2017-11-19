@@ -1,10 +1,12 @@
 package GUI;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.border.Border;
 
 import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
@@ -23,7 +26,7 @@ public class Form2 extends JPanel{
 	private JButton okButton;
 	private JTextField nameField;
 	private JComboBox uniComboBox;
-	private JComboBox campusComboBox;
+	private JComboBox localComboBox;
 	
 	private DatabaseActionListener dbListener;
 	private TableActionListener tableListener;
@@ -35,14 +38,14 @@ public class Form2 extends JPanel{
 		okButton = new JButton("Ok");
 		nameField = new JTextField(10);
 		uniComboBox = new JComboBox();
-		campusComboBox = new JComboBox();
+		localComboBox = new JComboBox();
 		
 		uniComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(dbListener != null)
-					setCampusComboBox();
+					setLocalComboBox();
 			}
 		});
 		
@@ -62,8 +65,8 @@ public class Form2 extends JPanel{
 			}
 		});
 		
-//		Border outter = BorderFactory.createTitledBorder("Quantidade de alunos ingressantes, cursando e formandos por instituição"); 
-//		Border inner = BorderFactory.createEmptyBorder(30,30,30,30); 
+		Border outter = BorderFactory.createTitledBorder("Consulta"); 
+		Border inner = BorderFactory.createLineBorder(Color.BLACK); 
 //		setBorder(BorderFactory.createCompoundBorder(outter, inner));
 		
 		setLayout(new GridBagLayout());
@@ -74,22 +77,17 @@ public class Form2 extends JPanel{
 		/**************FIRST ROW******************/
 		constraints.gridy = 0;
 		
-		constraints.gridx = 0;
-		constraints.weighty = 0.1;
-		constraints.weightx = 1;
-		constraints.anchor  = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Consulta: "), constraints);
-		
 		constraints.gridx = 1;
 		constraints.weighty = 0.1;
 		constraints.weightx = 1;
-		constraints.anchor  = GridBagConstraints.FIRST_LINE_START;
+		constraints.anchor  = GridBagConstraints.LINE_START;
 		
-		JTextPane title = new JTextPane();
-		title.setPreferredSize(new Dimension(170,75));
-		title.setText("Quantidade de alunos ingressantes, cursando e concluintes de cada curso ofertado pela instituicao");
-		title.setEditable(false);
-		add(title, constraints);
+		JTextPane titleText = new JTextPane();
+		titleText.setPreferredSize(new Dimension(250,80));
+		titleText.setText("Quantidade de alunos ingressantes, cursando e concluintes de cada curso ofertado pelas instituições");
+		titleText.setEditable(false);
+		titleText.setBorder(BorderFactory.createCompoundBorder(inner, outter));
+		add( titleText, constraints);
 		
 		/**************NEXT ROW******************/
 		/**************NEXT ROW******************/
@@ -114,13 +112,13 @@ public class Form2 extends JPanel{
 		constraints.weighty = 0.1;
 		constraints.weightx = 1;
 		constraints.anchor  = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Campus: "), constraints);
+		add(new JLabel("Local: "), constraints);
 		
 		constraints.gridx = 1;
 		constraints.weighty = 0.1;
 		constraints.weightx = 1;
 		constraints.anchor  = GridBagConstraints.FIRST_LINE_START;
-		add(campusComboBox, constraints);
+		add(localComboBox, constraints);
 		
 		/**************NEXT ROW******************/
 		constraints.gridy++;
@@ -138,10 +136,9 @@ public class Form2 extends JPanel{
 		if(dbListener != null) {
 			
 			QueryBuilder2 queryBuilder = new QueryBuilder2(dbListener);
-			String uni = uniComboBox.getSelectedItem().toString();
-			String campus = campusComboBox.getSelectedItem().toString();
+			String campus = localComboBox.getSelectedItem().toString();
 			
-			DatabaseResponse dataResp = queryBuilder.buildQuery( campus, uni ,orderBy);
+			DatabaseResponse dataResp = queryBuilder.buildQuery( campus ,orderBy);
 			
 			if(dataResp == null)
 				JOptionPane.showMessageDialog(Form2.this.getParent(), "Query not valid", "Error", JOptionPane.ERROR_MESSAGE);
@@ -152,7 +149,7 @@ public class Form2 extends JPanel{
 			System.out.println("null listener");
 	}
 	
-	private void setCampusComboBox() {
+	private void setLocalComboBox() {
 		if(dbListener != null) {
 
 			String uni = uniComboBox.getSelectedItem().toString();
@@ -160,9 +157,7 @@ public class Form2 extends JPanel{
 			String uniId = dbListener.queryRequested(requestUni).getData().get(1).get(0).toString();
 			
 			String campusQuery = "select distinct(NO_LOCAL_OFERTA) from local_oferta " + 
-					"where CO_IES = "+uniId+" and CO_LOCAL_OFERTA_IES in " + 
-					"(select distinct(CO_LOCAL_OFERTA) from curso " + 
-					"where CO_IES = "+ uniId +") ";
+					"where CO_IES = "+uniId+ " ";
 			
 			DatabaseResponse dataResp = dbListener.queryRequested(campusQuery);
 			
@@ -172,11 +167,11 @@ public class Form2 extends JPanel{
 				for(int i = 1; i < dataResp.getData().size(); i++)
 					uniModel.addElement(dataResp.getData().get(i).get(0));
 				
-				Dimension size = new Dimension(250, campusComboBox.getPreferredSize().height);
-				campusComboBox.setSize(size);
-				campusComboBox.setPreferredSize(size);
-				campusComboBox.setModel(uniModel);	
-				campusComboBox.setSelectedItem(campusComboBox.getItemAt(0));
+				Dimension size = new Dimension(250, localComboBox.getPreferredSize().height);
+				localComboBox.setSize(size);
+				localComboBox.setPreferredSize(size);
+				localComboBox.setModel(uniModel);	
+				localComboBox.setSelectedItem(localComboBox.getItemAt(0));
 			}
 		}
 	}

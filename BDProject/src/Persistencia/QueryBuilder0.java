@@ -9,12 +9,21 @@ public class QueryBuilder0 {
 		this.dbListener = dbListener;
 	}
 	
-	public DatabaseResponse makeQuery() {
+	public DatabaseResponse buildQuery(String cat, String orderBy) {
 		
-		String query = "select NO_IES ,count(*) CURSOS from curso group by CO_IES order by count(*)";
-		
-		DatabaseResponse resp = dbListener.queryRequested(query);
-		
-		return resp;
+		String query =  "select "+
+						"NO_IES, " +
+						"DS_CATEGORIA_ADMINISTRATIVA, "+
+						"QT_TEC_TOTAL, "+
+						"QT_DOCENTE_TOTAL, " +
+						"QT_ALUNO_TOTAL, " +
+						"QT_TEC_TOTAL + QT_DOCENTE_TOTAL + QT_ALUNO_TOTAL as TOTAL "+
+						"from ies "+
+						"where DS_CATEGORIA_ADMINISTRATIVA = '"+cat+"' ";
+	
+		if(!orderBy.isEmpty())
+			query += "order by " + orderBy;
+	
+		return dbListener.queryRequested(query);
 	}
 }

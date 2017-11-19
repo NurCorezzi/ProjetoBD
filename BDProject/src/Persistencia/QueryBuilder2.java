@@ -9,23 +9,18 @@ public class QueryBuilder2 {
 		this.dbListener = dbListener;
 	}
 	
-	public DatabaseResponse buildQuery(String campus, String uni, String orderBy) {
+	public DatabaseResponse buildQuery(String campus, String orderBy) {
 		
-		String requestUni = "select CO_IES from ies where NO_IES = '"+uni+"' ";
-		uni = dbListener.queryRequested(requestUni).getData().get(1).get(0).toString();
+		String codCursos = "(select CO_CURSO from local_oferta where NO_LOCAL_OFERTA = '"+campus+"')" ;
 		
-		String requestCampus = "select CO_LOCAL_OFERTA_IES from local_oferta where NO_LOCAL_OFERTA = '"+campus+"' and CO_IES = '"+uni+"' " ;
-		campus = dbListener.queryRequested(requestCampus).getData().get(1).get(0).toString();
-		
-		String query = 	"select " +
-						"NO_CURSO, " + 
-						"sum(QT_INGRESSO_CURSO) INGRESSANTES, " + 
-						"sum(QT_MATRICULA_CURSO) CURSANDO, " + 
-						"sum(QT_CONCLUINTE_CURSO) CONCLUINTES " + 
-						"from curso " +
-						"where CO_IES =" + uni + " " +
-						"and CO_LOCAL_OFERTA = " + campus + " " +
-						"group by NO_CURSO ";
+		String query = "select NO_CURSO, "+
+							  "DS_MODALIDADE_ENSINO,  "+
+							  "sum(QT_INGRESSO_CURSO) INGRESSANTES, "+
+							  "sum(QT_MATRICULA_CURSO) CURSANDO, "+
+							  "sum(QT_CONCLUINTE_CURSO) CONCLUINTES "+ 
+					   "from curso "+
+					   "where CO_CURSO in"+codCursos+
+					   "group by NO_CURSO, DS_MODALIDADE_ENSINO ";
 	
 		if(!orderBy.isEmpty())
 			query += "order by " + orderBy;
