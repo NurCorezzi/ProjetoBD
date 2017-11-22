@@ -38,7 +38,9 @@ public class TabbedForm extends JPanel{
 		form4 = new Form4(); form4.setTableActionListener(table4.getTableActionListener());
 
 		table0.setReorderTableListener(form0.getReorderTableListener());
+		table1.setReorderTableListener(form1.getReorderTableListener());
 		table2.setReorderTableListener(form2.getReorderTableListener());
+		table3.setReorderTableListener(form3.getReorderTableListener());
 		
 		tabbedPanel.addTab("Consulta 0", new TableForm(form0, table0));
 		tabbedPanel.addTab("Consulta 1", new TableForm(form1, table1));

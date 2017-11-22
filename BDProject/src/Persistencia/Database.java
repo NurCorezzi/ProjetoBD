@@ -21,13 +21,19 @@ public class Database {
 	}
 	
 	public void connect() throws SQLException{
-		myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/csv_db?useSSL=false", "root", "root");
+		myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/csv_bd?useSSL=false", "root", "root");
 		System.out.println("Database connection successful!\n");
 	}
 	
 	public DatabaseResponse select(String query) {
 		try {
 			myStmt = myConn.createStatement();
+			
+			if(query.contains("call")) {
+				myStmt.execute(query);
+				return null;
+			}
+			
 			myRs = myStmt.executeQuery(query);
 			
 			ResultSetMetaData meta = myRs.getMetaData();

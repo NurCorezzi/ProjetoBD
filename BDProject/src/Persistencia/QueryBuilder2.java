@@ -13,8 +13,8 @@ public class QueryBuilder2 {
 		
 		String codCursos = "(select CO_CURSO from local_oferta where NO_LOCAL_OFERTA = '"+campus+"')" ;
 		
-		String query = "select NO_CURSO, "+
-							  "DS_MODALIDADE_ENSINO,  "+
+		String query = "select NO_CURSO as NOME, "+
+							  "DS_MODALIDADE_ENSINO as MODALIDADE,  "+
 							  "sum(QT_INGRESSO_CURSO) INGRESSANTES, "+
 							  "sum(QT_MATRICULA_CURSO) CURSANDO, "+
 							  "sum(QT_CONCLUINTE_CURSO) CONCLUINTES "+ 
