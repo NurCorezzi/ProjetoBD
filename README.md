@@ -1,3 +1,0 @@
-# ProjetoBD
-
-Projeto de BD
