@@ -21,7 +21,7 @@ import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
 import Persistencia.QueryBuilder1;
 
-public class Form1 extends JPanel{
+public class Form1 extends Form{
 	
 	private JButton okButton;
 	private JTextField nameField;

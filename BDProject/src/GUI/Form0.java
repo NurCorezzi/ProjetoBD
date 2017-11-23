@@ -22,7 +22,7 @@ import Persistencia.DatabaseResponse;
 import Persistencia.QueryBuilder0;
 import Persistencia.QueryBuilder2;
 
-public class Form0 extends JPanel{
+public class Form0 extends Form{
 	
 	private JButton okButton;
 	private JTextField nameField;

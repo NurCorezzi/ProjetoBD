@@ -6,16 +6,26 @@ import javax.swing.JPanel;
 
 class TableForm extends JPanel{
 	
-	private JPanel form;
+	private Form form;
 	private Table table;
 	
-	public TableForm(JPanel form0, Table table) {
+	public TableForm(Form form, Table table) {
 		
-		this.form = form0;
+		this.form = form;
 		this.table = table;
 		
 		setLayout(new BorderLayout());
-		add(form0, BorderLayout.WEST);
+		add(form, BorderLayout.WEST);
 		add(table, BorderLayout.CENTER);
+	}
+	
+	public void changeFormVisibility()
+	{
+		form.setVisible( !form.isVisible() );	
+	}
+	
+	public void performQuery()
+	{
+		form.performQuery("");
 	}
 }

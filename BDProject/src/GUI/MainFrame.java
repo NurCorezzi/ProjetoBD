@@ -28,8 +28,15 @@ public class MainFrame extends JFrame{
 		
 		menuBar.setHideActionListener(new HideActionListener() {
 			@Override
-			public void actionPerformed(boolean arg0) {
-				tabbedForm.setVisible(arg0);
+			public void actionPerformed() {
+				tabbedForm.changeFormVisibility();
+			}
+		});
+		
+		menuBar.setQueryActionListener(new QueryActionListener() {
+			@Override
+			public void actionPerformed() {
+				tabbedForm.performQuery();
 			}
 		});
 		

@@ -11,7 +11,7 @@ public class QueryBuilder2 {
 	
 	public DatabaseResponse buildQuery(String campus, String orderBy) {
 		
-		String codCursos = "(select CO_CURSO from local_oferta where NO_LOCAL_OFERTA = '"+campus+"')" ;
+		String codCursos = "(select CO_CURSO_LOCAL from local_oferta where NO_LOCAL_OFERTA = '"+campus+"')" ;
 		
 		String query = "select NO_CURSO as NOME, "+
 							  "DS_MODALIDADE_ENSINO as MODALIDADE,  "+

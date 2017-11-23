@@ -54,12 +54,22 @@ public class TabbedForm extends JPanel{
 	}
 	
 	public void setDatabaseActionListener(DatabaseActionListener dbListener) {
-		
 		form0.setDatabaseActionListener(dbListener);
 		form1.setDatabaseActionListener(dbListener);
 		form2.setDatabaseActionListener(dbListener);
 		form3.setDatabaseActionListener(dbListener);
 		form4.setDatabaseActionListener(dbListener);
+	}
 	
+	public void changeFormVisibility()
+	{
+		TableForm cur = (TableForm)tabbedPanel.getSelectedComponent();
+		cur.changeFormVisibility();
+	}
+	
+	public void performQuery()
+	{
+		TableForm cur = (TableForm)tabbedPanel.getSelectedComponent();
+		cur.performQuery();
 	}
 }

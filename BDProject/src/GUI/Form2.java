@@ -21,7 +21,7 @@ import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
 import Persistencia.QueryBuilder2;
 
-public class Form2 extends JPanel{
+public class Form2 extends Form{
 	
 	private JButton okButton;
 	private JTextField nameField;
@@ -157,7 +157,7 @@ public class Form2 extends JPanel{
 			String uniId = dbListener.queryRequested(requestUni).getData().get(1).get(0).toString();
 			
 			String campusQuery = "select distinct(NO_LOCAL_OFERTA) from local_oferta " + 
-					"where CO_IES = "+uniId+ " ";
+					"where CO_IES_LOCAL = "+uniId+ " ";
 			
 			DatabaseResponse dataResp = dbListener.queryRequested(campusQuery);
 			

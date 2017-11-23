@@ -15,7 +15,7 @@ public class QueryBuilder4 {
 				"		sum(QT_INGRESSO_CURSO) as INGRESSANTES, " + 
 				"		sum(QT_MATRICULA_CURSO) as CURSANDO, " + 
 				"		sum(QT_CONCLUINTE_CURSO) as CONCLUINTES " + 
-				"from curso as C join ies I on C.CO_IES = I.CO_IES " + 
+				"from curso as C join ies I on C.CO_IES_CURSO = I.CO_IES " + 
 				"where NO_REGIAO_IES = '"+regiao+"' " + 
 				"	  and DS_GRAU_ACADEMICO = '"+grau+"' " + 
 				"group by SGL_UF_IES ";

@@ -21,7 +21,7 @@ import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
 import Persistencia.QueryBuilder4;
 
-public class Form4 extends JPanel{
+public class Form4 extends Form{
 	
 	private JButton okButton;
 	private JTextField nameField;
@@ -103,7 +103,7 @@ public class Form4 extends JPanel{
 		constraints.weighty = 0.1;
 		constraints.weightx = 1;
 		constraints.anchor  = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Sexo: "), constraints);
+		add(new JLabel("Grau: "), constraints);
 		
 		constraints.gridx = 1;
 		constraints.weighty = 0.1;

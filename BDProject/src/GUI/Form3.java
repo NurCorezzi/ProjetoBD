@@ -21,7 +21,7 @@ import Persistencia.DatabaseActionListener;
 import Persistencia.DatabaseResponse;
 import Persistencia.QueryBuilder3;
 
-public class Form3 extends JPanel{
+public class Form3 extends Form{
 	
 	private JButton okButton;
 	private JTextField nameField;
@@ -73,7 +73,7 @@ public class Form3 extends JPanel{
 		
 		JTextPane titleText = new JTextPane();
 		titleText.setPreferredSize(new Dimension(250,80));
-		titleText.setText("Quantidade de alunos ingressantes, cursando e formandos por regiões ");
+		titleText.setText("Quantidade de alunos ingressantes, cursando e formandos das instituições por regiões ");
 		titleText.setEditable(false);
 		titleText.setBorder(BorderFactory.createCompoundBorder(inner, outter));
 		add( titleText, constraints);

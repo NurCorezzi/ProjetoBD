@@ -16,7 +16,7 @@ public class QueryBuilder3 {
 								"sum(QT_MATRICULA_CURSO) as MATRICULADOS, "+
 								"sum(QT_CONCLUINTE_CURSO) as CONCLUINTES, " +
 								"sum(QT_INGRESSO_CURSO) + sum(QT_MATRICULA_CURSO) + sum(QT_CONCLUINTE_CURSO) as TOTAL " +
-					   "from curso as C join ies as I on C.CO_IES = I.CO_IES " +
+					   "from curso as C join ies as I on C.CO_IES_CURSO = I.CO_IES " +
 					   "where NO_REGIAO_IES = '"+regiao+"'" +
 					   "group by  I.CO_IES)"+
 					   "union"+
@@ -25,7 +25,7 @@ public class QueryBuilder3 {
 					    		"sum(QT_MATRICULA_CURSO) as MATRICULADOS, " +
 					    		"sum(QT_CONCLUINTE_CURSO) as CONCLUINTES, "+
 								"sum(QT_INGRESSO_CURSO) + sum(QT_MATRICULA_CURSO) + sum(QT_CONCLUINTE_CURSO) as TOTAL " +
-					   "from curso as C join ies as I on C.CO_IES = I.CO_IES " +
+					   "from curso as C join ies as I on C.CO_IES_CURSO = I.CO_IES " +
 					   "where NO_REGIAO_IES = '"+regiao+"'" +
 					   "group by  I.NO_REGIAO_IES)";
 	
